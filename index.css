@@ -3,20 +3,44 @@
     height: 100%;
 }
 
-.color-picker-container div {
-    margin: 5px 0;
-}
 
 .palette-container {
-    background-color: plum;
+    width: 100%;
+    padding-bottom: 55%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.palette-container .palette-main {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: rgb(255, 0, 0)
+}
+
+.palette-container .palette-main .palette-saturation {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+}
+
+.palette-container .palette-main .palette-saturation .palette-lightness {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0));
 }
 
 .hue-container {
     position: relative;
-}
-
-.hue-container div {
-    margin: 0;
 }
 
 .hue-chooser {
@@ -27,12 +51,11 @@
 }
 
 .hue-handler {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ffffff;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: #ffffff;
-    box-sizing: border-box;
     position: absolute;
-    top: 0;
+    top: -1px;
+    box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;
 }

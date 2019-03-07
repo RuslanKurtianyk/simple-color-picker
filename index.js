@@ -25,7 +25,14 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		template.innerHTML = `
 			<link rel="stylesheet" href="index.css">
 			<div class="color-picker-container" style="${paletteStyle}">
-				<div class="palette-container">Here will be palette</div>
+				<div class="palette-container">
+					<div class="palette-main">
+						<div class="palette-saturation">
+							<div class="palette-lightness"></div>
+							<div class="palette-chooser"></div>
+						</div>
+					</div>
+				</div>
 				<div class="hue-container">
 					<div class="hue-chooser" id="hue-slider" style="background: ${backgroundHue}">
 						<span class="hue-handler"></span>
@@ -46,7 +53,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	initHueSlider() {
 		const range = this.shadowRoot.getElementById('hue-slider')
 		const dragger = range.children[0]
-		const draggerWidth = 20
+		const draggerWidth = 22
 		let	down = false
 		let	rangeWidth
 		let rangeLeft
