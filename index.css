@@ -3,7 +3,7 @@
     height: 100%;
 }
 
-.color-picker-container div{
+.color-picker-container div {
     margin: 5px 0;
 }
 
@@ -11,11 +11,28 @@
     background-color: plum;
 }
 
-
 .hue-container {
     position: relative;
 }
+
+.hue-container div {
+    margin: 0;
+}
+
 .hue-chooser {
     height: 20px;
     width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.hue-handler {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #ffffff;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
 }
