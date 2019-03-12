@@ -101,9 +101,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		const updateDragger = (e) => {
 			if (down && e.pageX >= rangeLeft && e.pageX <= (rangeLeft + rangeWidth)) {	
 				const hue = e.pageX - rangeLeft
-				const huePercentage = hue / rangeWidth
-				hueValue = parseInt(parseInt(huePercentage * 100) * 3.6)
-				this.hslValue.hue = hueValue
+				this.hslValue.hue = parseInt(parseInt((hue / rangeWidth) * 100) * 3.6)
 				hslaElement.innerHTML = this.generateHslaString()
 				dragger.style.left = `${hue - draggerWidth}px`
 			}
