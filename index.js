@@ -46,9 +46,10 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 					<div class="hue-chooser" id="hue-slider" style="background: ${backgroundHue}">
 						<span class="hue-handler"></span>
 					</div>
-
-					<div class="saturation-chooser" id="saturation-slider" style="background: ${backgroundHue}">
-						<span class="saturation-handler"></span>
+				</div>
+				<div class="aplha-container">
+					<div class="alpha-chooser" id="alpha-slider" style="background:linear-gradient(to right, rgba(146, 114, 114, 0) 0%, rgb(146, 114, 114) 100%);">
+						<span class="alpha-handler"></span>
 					</div>
 				</div>
 				<div class="color-result">
@@ -68,12 +69,13 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.initHueSlider()
+		this.initHorizontalSlider('hue-slider', 'hue')
+		this.initHorizontalSlider('alpha-slider', 'alpha')
 		this.initSaturationLightnessChooser()
 	}
 
-	initHueSlider() {
-		const range = this.shadowRoot.getElementById('hue-slider')
+	initHorizontalSlider(name, value) {
+		const range = this.shadowRoot.getElementById(name)
 		const dragger = range.children[0]
 		const draggerWidth = 22
 		let down = false
@@ -103,7 +105,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		const updateDragger = (e) => {
 			if (down && e.pageX >= rangeLeft && e.pageX <= (rangeLeft + rangeWidth)) {
 				const hue = e.pageX - rangeLeft
-				this.hslValue.hue = parseInt(parseInt((hue / rangeWidth) * 100) * 3.6)
+				this.hslValue[value] = parseInt(parseInt((hue / rangeWidth) * 100) * 3.6)
 				this.updateHslaView()
 				dragger.style.left = `${hue - draggerWidth}px`
 			}
@@ -113,7 +115,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	initSaturationLightnessChooser() {
 		// TODO: rewrite all sliders to one approach
 		const container = this.shadowRoot.getElementById('saturation-lightness-container')
-		const dragItem = this.shadowRoot.getElementById('saturation-lightness-chooser')
+		const dragCircle = this.shadowRoot.getElementById('saturation-lightness-chooser')
 		let active = false
 		let currentX
 		let currentY
@@ -131,7 +133,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 				initialY = e.clientY - yOffset
 			}
 
-			if (e.target === dragItem) {
+			if (e.target === dragCircle) {
 				active = true
 			}
 		}
@@ -159,10 +161,10 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 
 				xOffset = currentX
 				yOffset = currentY
-				console.log(dragAreaWidth, dragAreaHeight);
+
 				this.hslValue.saturation = parseInt(parseInt((xOffset / dragAreaWidth) * 100))
 				this.hslValue.lightness = parseInt(parseInt((yOffset / dragAreaHeight) * 100))
-				setTranslate(currentX, currentY, dragItem)
+				setTranslate(currentX, currentY, dragCircle)
 				this.updateHslaView()
 			}
 		}
