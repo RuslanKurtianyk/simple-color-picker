@@ -1,13 +1,3 @@
-function generateHueChooserBackground() {
-	let backgroundGradient = '-webkit-linear-gradient(left, '
-	for (let i = 10; i < 370; i += 10) {
-		backgroundGradient += `hsla(${i}, 100%, 50%, 1),`
-	}
-	backgroundGradient = backgroundGradient.substring(0, backgroundGradient.length - 1)
-	backgroundGradient += ');'
-	return backgroundGradient
-}
-
 customElements.define('simple-colorpicker', class extends HTMLElement {
 
 	constructor() {
@@ -28,7 +18,6 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		const width = this.getAttribute('width') || 100
 		const height = this.getAttribute('height') || 100
 		const paletteStyle = `width: ${width}px; height: ${height}px`
-		const backgroundHue = generateHueChooserBackground()
 
 		const template = document.createElement('template')
 		template.innerHTML = `
@@ -43,12 +32,12 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 					</div>
 				</div>
 				<div class="hue-container">
-					<div class="hue-chooser" id="hue-slider" style="background: ${backgroundHue}">
+					<div class="hue-chooser" id="hue-chooser">
 						<span class="hue-handler"></span>
 					</div>
 				</div>
 				<div class="aplha-container">
-					<div class="alpha-chooser" id="alpha-slider" style="background:linear-gradient(to right, rgba(146, 114, 114, 0) 0%, rgb(146, 114, 114) 100%);">
+					<div class="alpha-chooser" id="alpha-chooser">
 						<span class="alpha-handler"></span>
 					</div>
 				</div>
@@ -69,8 +58,8 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.initHorizontalSlider('hue-slider', 'hue')
-		this.initHorizontalSlider('alpha-slider', 'alpha')
+		this.initHorizontalSlider('hue-chooser', 'hue')
+		this.initHorizontalSlider('alpha-chooser', 'alpha')
 		this.initSaturationLightnessChooser()
 	}
 

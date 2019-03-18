@@ -72,6 +72,14 @@
     box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;
 }
 
+#hue-chooser {
+    background: linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 17%, rgb(0, 255, 0) 33%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 67%, rgb(255, 0, 255) 83%, rgb(255, 0, 0) 100%);
+}
+
+#alpha-chooser {
+    background:linear-gradient(to right, rgba(146, 114, 114, 0) 0%, rgb(146, 114, 114) 100%);
+}
+
 .color-result .result-hsla .hsla-value {
     padding: 3px;
     margin-top: 5px;
