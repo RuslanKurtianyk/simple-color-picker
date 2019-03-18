@@ -31,22 +31,24 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 						</div>
 					</div>
 				</div>
-				<div class="hue-container">
-					<div class="hue-chooser" id="hue-chooser">
-						<span class="hue-handler"></span>
-					</div>
-				</div>
-				<div class="aplha-container">
-					<div class="alpha-chooser" id="alpha-chooser">
-						<span class="alpha-handler"></span>
-					</div>
-				</div>
-				<div class="color-result">
-					<div class="result-hsla">
-						<div class="hsla-value" id="hsla-value">
-							${this.generateHslaString()}
+				<div class="settings-container">
+					<div class="hue-container">
+						<div class="hue-chooser" id="hue-chooser">
+							<span class="hue-handler"></span>
 						</div>
-						<div>HSLA</div>
+					</div>
+					<div class="aplha-container">
+						<div class="alpha-chooser" id="alpha-chooser">
+							<span class="alpha-handler"></span>
+						</div>
+					</div>
+					<div class="color-result">
+						<div class="result-hsla">
+							<div class="hsla-value" id="hsla-value">
+								${this.generateHslaString()}
+							</div>
+							<div>HSLA</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -66,7 +68,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	initHorizontalSlider(name, value) {
 		const range = this.shadowRoot.getElementById(name)
 		const dragger = range.children[0]
-		const draggerWidth = 22
+		const draggerWidth = 14
 		let down = false
 		let rangeWidth
 		let rangeLeft
