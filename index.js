@@ -39,7 +39,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 					</div>
 					<div class="slider-container">
 						<div class="slider-chooser" id="alpha-chooser">
-							<input class="slider" id="alpha-handler" type="range" min="0" max="100" value="${this.hslValue.alpha}">
+							<input class="slider" id="alpha-handler" type="range" min="0" max="1" step="0.01" value="${this.hslValue.alpha}">
 						</div>
 					</div>
 					<div class="color-result">   
@@ -67,7 +67,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 
 	initAlphaListener() {
 		const alphaRange = this.shadowRoot.querySelector('#alpha-handler')
-		alphaRange.addEventListener('input', (e) => {
+		alphaRange.addEventListener('input', () => {
 			this.hslValue.alpha = alphaRange.value
 			this.updateHslaView()
 		}, false)
