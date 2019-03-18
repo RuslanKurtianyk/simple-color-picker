@@ -32,17 +32,17 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 					</div>
 				</div>
 				<div class="settings-container">
-					<div class="hue-container">
-						<div class="hue-chooser" id="hue-chooser">
-							<span class="hue-handler"></span>
+					<div class="slider-container">
+						<div class="slider-chooser" id="hue-chooser">
+							<input class="slider" id="hue-handler" type="range" min="0" max="360" value="${this.hslValue.hue}">
 						</div>
 					</div>
-					<div class="aplha-container">
-						<div class="alpha-chooser" id="alpha-chooser">
-							<span class="alpha-handler"></span>
+					<div class="slider-container">
+						<div class="slider-chooser" id="alpha-chooser">
+							<input class="slider" id="alpha-handler" type="range" min="0" max="100" value="${this.hslValue.alpha}">
 						</div>
 					</div>
-					<div class="color-result">
+					<div class="color-result">   
 						<div class="result-hsla">
 							<div class="hsla-value" id="hsla-value">
 								${this.generateHslaString()}
@@ -60,47 +60,25 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.initHorizontalSlider('hue-chooser', 'hue')
-		this.initHorizontalSlider('alpha-chooser', 'alpha')
+		this.initAlphaListener()
+		this.initHueListener()
 		this.initSaturationLightnessChooser()
 	}
 
-	initHorizontalSlider(name, value) {
-		const range = this.shadowRoot.getElementById(name)
-		const dragger = range.children[0]
-		const draggerWidth = 14
-		let down = false
-		let rangeWidth
-		let rangeLeft
+	initAlphaListener() {
+		const alphaRange = this.shadowRoot.querySelector('#alpha-handler')
+		alphaRange.addEventListener('input', (e) => {
+			this.hslValue.alpha = alphaRange.value
+			this.updateHslaView()
+		}, false)
+	}
 
-		dragger.style.width = `${draggerWidth}px`
-		dragger.style.left = `${-draggerWidth}px`
-		dragger.style.marginLeft = `${(draggerWidth / 2)}px`
-
-		range.addEventListener('mousedown', e => {
-			rangeWidth = this.offsetWidth
-			rangeLeft = this.offsetLeft
-			down = true
-			updateDragger(e)
-			return false
-		})
-
-		range.addEventListener('mousemove', e => {
-			updateDragger(e)
-		})
-
-		range.addEventListener('mouseup', () => {
-			down = false
-		})
-
-		const updateDragger = (e) => {
-			if (down && e.pageX >= rangeLeft && e.pageX <= (rangeLeft + rangeWidth)) {
-				const hue = e.pageX - rangeLeft
-				this.hslValue[value] = parseInt(parseInt((hue / rangeWidth) * 100) * 3.6)
-				this.updateHslaView()
-				dragger.style.left = `${hue - draggerWidth}px`
-			}
-		}
+	initHueListener() {
+		const hueRange = this.shadowRoot.querySelector('#hue-handler')
+		hueRange.addEventListener('input', () => {
+			this.hslValue.hue = hueRange.value
+			this.updateHslaView()
+		}, false)
 	}
 
 	initSaturationLightnessChooser() {
