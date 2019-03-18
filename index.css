@@ -2,10 +2,13 @@
     width: 100%;
     height: 100%;
     border: 1px solid #ccc;
-    background: green;
+    background: #fff;
 
     --circle-size: 14px;
     --slider-height: 12px;
+    --color-gray: #ccc;
+    --color-white: #fff;
+    --color-red: #f00;
 }
 
 .palette-container {
@@ -26,7 +29,7 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background: #f00;
+    background: var(--color-red);
 }
 
 .palette-container .palette-main .palette-saturation {
@@ -35,7 +38,7 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+    background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
 }
 
 .palette-container .palette-main .palette-saturation .palette-lightness {
@@ -52,7 +55,7 @@
     height: var(--circle-size);
     width: var(--circle-size);
     background-color: transparent;
-    border: 2px solid #fff;
+    border: 2px solid var(--color-white);
     border-radius: 50%;
     box-sizing: border-box;
     touch-action: none;
@@ -82,15 +85,15 @@
 .color-result .result-hsla .hsla-value {
     padding: 3px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gray);
     border-radius: 2px;
     text-align: center;
 }
 
 .slider {
     -webkit-appearance: none;
-    width: 100%;
-    margin: 0;
+    margin: 0 0 0 -3px;
+    width: calc(100% + 6px);
 }
 
 .slider:focus {
@@ -99,31 +102,31 @@
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 1px solid #ccc;
-    height: var(--circle-size);;
-    width: var(--circle-size);;
+    border: 1px solid var(--color-gray);
+    height: var(--circle-size);
+    width: var(--circle-size);
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--color-white);
     cursor: pointer;
     margin-top: -15px; /* need to specify a margin in webkit */
   }
   
   /* All the same stuff for Firefox */
 .slider::-moz-range-thumb {
-    border: 1px solid #ccc;
-    height: var(--circle-size);;
-    width: var(--circle-size);;
+    border: 1px solid var(--color-gray);
+    height: var(--circle-size);
+    width: var(--circle-size);
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--color-white);
     cursor: pointer;
   }
   
   /* All the same stuff for IE */
   .slider::-ms-thumb {
-    border: 1px solid #ccc;
-    height: var(--circle-size);;
-    width: var(--circle-size);;
+    border: 1px solid var(--color-gray);
+    height: var(--circle-size);
+    width: var(--circle-size);
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--color-white);
     cursor: pointer;
   }
