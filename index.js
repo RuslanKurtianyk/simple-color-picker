@@ -125,7 +125,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		let yOffset = 0
 
 		const dragStart = (e) => {
-			if (e.type === "touchstart") {
+			if (e.type === 'touchstart') {
 				initialX = e.touches[0].clientX - xOffset
 				initialY = e.touches[0].clientY - yOffset
 			} else {
@@ -151,7 +151,7 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 				const dragAreaWidth = container.clientWidth
 				const dragAreaHeight = container.clientHeight
 
-				if (e.type === "touchmove") {
+				if (e.type === 'touchmove') {
 					currentX = e.touches[0].clientX - initialX
 					currentY = e.touches[0].clientY - initialY
 				} else {
@@ -170,16 +170,16 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		}
 
 		const setTranslate = (xPos, yPos, element) => {
-			element.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)"
+			element.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`
 		}
 
-		container.addEventListener("touchstart", dragStart, false)
-		container.addEventListener("touchend", dragEnd, false)
-		container.addEventListener("touchmove", drag, false)
+		container.addEventListener('touchstart', dragStart, false)
+		container.addEventListener('touchend', dragEnd, false)
+		container.addEventListener('touchmove', drag, false)
 
-		container.addEventListener("mousedown", dragStart, false)
-		container.addEventListener("mouseup", dragEnd, false)
-		container.addEventListener("mousemove", drag, false)
+		container.addEventListener('mousedown', dragStart, false)
+		container.addEventListener('mouseup', dragEnd, false)
+		container.addEventListener('mousemove', drag, false)
 	}
 
 	generateHslaString() {
