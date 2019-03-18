@@ -1,3 +1,5 @@
+import "./style.css";
+
 customElements.define('simple-colorpicker', class extends HTMLElement {
 
 	constructor() {
