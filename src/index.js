@@ -1,6 +1,6 @@
-import "./style.css";
+import jssSheets from './jss'
 
-customElements.define('simple-colorpicker', class extends HTMLElement {
+window.customElements.define('simple-colorpicker', class extends HTMLElement {
 
 	constructor() {
 		super()
@@ -21,32 +21,34 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 		const height = this.getAttribute('height') || 100
 		const paletteStyle = `width: ${width}px; height: ${height}px`
 
+		const { classes } = jssSheets.registry[0]
+		const style = jssSheets.toString()
 		const template = document.createElement('template')
+
 		template.innerHTML = `
-			<link rel="stylesheet" href="index.css">
-			<div class="color-picker-container" style="${paletteStyle}">
-				<div class="palette-container">
-					<div class="palette-main">
-						<div class="palette-saturation" id="saturation-lightness-container">
-							<div class="palette-lightness"></div>
-							<div class="palette-chooser" id="saturation-lightness-chooser"></div>
+			<div class=${classes.colorPickerContainer} style="${paletteStyle}">
+				<div class=${classes.paletteContainer}>
+					<div class="${classes.palette} ${classes.paletteMain}">
+						<div class="${classes.palette} ${classes.paletteSaturation}" id="saturation-lightness-container">
+							<div class="${classes.palette} ${classes.paletteLightness}"></div>
+							<div class=${classes.paletteChooser} id="saturation-lightness-chooser"></div>
 						</div>
 					</div>
 				</div>
-				<div class="settings-container">
-					<div class="slider-container">
-						<div class="slider-chooser" id="hue-chooser">
-							<input class="slider" id="hue-handler" type="range" min="0" max="360" value="${this.hslValue.hue}">
+				<div class="${classes.settingsContainer}">
+					<div class=${classes.sliderContainer}>
+						<div class="${classes.sliderChooser} ${classes.hueChooser}" id="hue-chooser">
+							<input class=${classes.slider} id="hue-handler" type="range" min="0" max="360" value="${this.hslValue.hue}">
 						</div>
 					</div>
-					<div class="slider-container">
-						<div class="slider-chooser" id="alpha-chooser">
-							<input class="slider" id="alpha-handler" type="range" min="0" max="1" step="0.01" value="${this.hslValue.alpha}">
+					<div class=${classes.sliderContainer}>
+						<div class="${classes.sliderChooser} ${classes.alphaChooser}" id"="alpha-chooser">
+							<input class=${classes.slider} id="alpha-handler" type="range" min="0" max="1" step="0.01" value="${this.hslValue.alpha}">
 						</div>
 					</div>
-					<div class="color-result">   
+					<div class=${classes.colorResult}>   
 						<div class="result-hsla">
-							<div class="hsla-value" id="hsla-value">
+							<div class=${classes.hslaValue} id="hsla-value">
 								${this.generateHslaString()}
 							</div>
 							<div>HSLA</div>
@@ -54,8 +56,8 @@ customElements.define('simple-colorpicker', class extends HTMLElement {
 					</div>
 				</div>
 			</div>
+			<style>${style}<style>
 		`
-
 		this.shadowRoot.appendChild(
 			template.content.cloneNode(true)
 		)
