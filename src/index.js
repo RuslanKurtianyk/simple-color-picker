@@ -163,4 +163,4 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		const hslaElement = this.shadowRoot.getElementById('hsla-value')
 		hslaElement.innerHTML = this.generateHslaString()
 	}
-});
+})
