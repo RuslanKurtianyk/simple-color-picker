@@ -7,14 +7,28 @@ module.exports = function (config) {
         basePath: path.join(process.cwd()),
         frameworks: ["jasmine"],
         files: [
-            { pattern: "src/base.spec.js" },
-            { pattern: "src/**/*.spec.js" },
+            { pattern: "test-context.js" },
         ],
-        exclude: [
-            "./node_modules/*",
-        ],
+        preprocessors: {
+            "test-context.js": ["webpack"]
+        },
+        webpack: {
+            module: {
+                rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        use: {
+                          loader: "babel-loader"
+                        }
+                      }
+                ]
+            },
+            watch: true
+        },
         plugins: [
             require("karma-jasmine"),
+            require("karma-webpack"),
             require("karma-chrome-launcher"),
             require("karma-jasmine-html-reporter"),
             require("karma-coverage-istanbul-reporter"),
