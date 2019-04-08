@@ -8,6 +8,9 @@
  * @return  {Array}           The RGB representation (r, g, and b in the set [0, 255])
  */
 export const hslToRgb = (h, s, l) => {
+    if (h < 0 || h > 360 ||s < 0 || s > 1 ||l < 0 ||l > 1) {
+        throw new Error("Something went wrong. Please check input data.")
+    }
     const c = (1 - Math.abs(2 * l - 1)) * s
     const hp = h / 60.0
     const x = c * (1 - Math.abs((hp % 2) - 1))
@@ -21,6 +24,11 @@ export const hslToRgb = (h, s, l) => {
     else if (hp <= 5) result = [x, 0, c]
     else if (hp <= 6) result = [c, 0, x]
     const m = l - c * 0.5
+
+    const hasErrors = result.some(r => typeof(r) === undefined)
+    if (hasErrors) {
+        throw new Error("Something went wrong(")
+    }
 
     return [
         Math.round(255 * (result[0] + m)),
