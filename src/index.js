@@ -2,6 +2,16 @@ import jssSheets from './jss'
 
 window.customElements.define('simple-colorpicker', class extends HTMLElement {
 
+	get colorTypes() {
+		return {
+			hsl: 'HSL',
+			hsla: 'HSLA',
+			hex: 'HEX',
+			rgb: 'RGB',
+			rgba: 'RGBA',
+		}
+	}
+
 	constructor() {
 		super()
 
@@ -9,19 +19,22 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 			mode: 'open'
 		})
 
-		this.type = "hsla"
+		this.type = this.colorTypes.hsla
+
 		this.hslValue = {
 			hue: 0,
 			saturation: 100,
 			lightness: 50,
-			alpha: 1
+			alpha: 1,
 		}
 
 		const width = this.getAttribute('width') || 100
 		const height = this.getAttribute('height') || 100
 		const paletteStyle = `width: ${width}px; height: ${height}px`
 
-		const { classes } = jssSheets.registry[0]
+		const {
+			classes
+		} = jssSheets.registry[0]
 		const style = jssSheets.toString()
 		const template = document.createElement('template')
 
@@ -47,12 +60,13 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 						</div>
 					</div>
 					<div class=${classes.colorResult}>   
-						<div class="result-hsla">
+						<div class=${classes.colorResultValue}>
 							<div class=${classes.hslaValue} id="hsla-value">
 								${this.generateHslaString()}
 							</div>
-							<div>HSLA</div>
+							<div class=${classes.colorType} id="color-type-value">${this.type}</div>
 						</div>
+						<div class=${classes.colorSwitcher} id="color-result-type-change"></div>
 					</div>
 				</div>
 			</div>
@@ -64,9 +78,23 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	connectedCallback() {
+		this.initTypeChangeHandler()
 		this.initAlphaListener()
 		this.initHueListener()
-		this.initSaturationLightnessChooser()
+		this.initSaturationLightnessSelector()
+	}
+
+	initTypeChangeHandler() {
+		const typeChangeHandler = this.shadowRoot.querySelector("#color-result-type-change")
+		typeChangeHandler.addEventListener('click', () => {
+			const currentType = this.type
+			Object.values(this.colorTypes).forEach((value, index, array) => {
+				if (currentType === value) {
+					this.type = index === (array.length - 1) ? array[0] : array[++index]
+				}
+			})
+			this.updateColorTypeValue()
+		}, false)
 	}
 
 	initAlphaListener() {
@@ -85,10 +113,10 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		}, false)
 	}
 
-	initSaturationLightnessChooser() {
+	initSaturationLightnessSelector() {
 		// TODO: rewrite all sliders to one approach
-		const container = this.shadowRoot.getElementById('saturation-lightness-container')
-		const dragCircle = this.shadowRoot.getElementById('saturation-lightness-chooser')
+		const container = this.shadowRoot.querySelector('#saturation-lightness-container')
+		const dragCircle = this.shadowRoot.querySelector('#saturation-lightness-chooser')
 		let active = false
 		let currentX
 		let currentY
@@ -156,11 +184,16 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	generateHslaString() {
-		return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha} )`
+		return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
 	}
 
 	updateHslaView() {
-		const hslaElement = this.shadowRoot.getElementById('hsla-value')
+		const hslaElement = this.shadowRoot.querySelector('#hsla-value')
 		hslaElement.innerHTML = this.generateHslaString()
+	}
+
+	updateColorTypeValue() {
+		const hslaElement = this.shadowRoot.querySelector('#color-type-value')
+		hslaElement.innerHTML = this.type
 	}
 })

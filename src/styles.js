@@ -4,6 +4,7 @@ const variables = {
     colorGray: '#ccc',
     colorWhite: '#fff',
     colorRed: '#f00',
+    transparent: 'transparent',
 }
 
 export default {
@@ -66,13 +67,6 @@ export default {
     alphaChooser: {
         background: 'linear-gradient(to right, rgba(146, 114, 114, 0) 0%, rgb(146, 114, 114) 100%)'
     },
-    hslaValue: {
-        padding: '3px',
-        marginTop: '5px',
-        border: [1, 'solid', variables.colorGray],
-        borderRadius: '2px',
-        textAlign: 'center',
-    },
     slider: {
         appearance: 'none',
         margin: [0, 0, 0, -3],
@@ -106,6 +100,47 @@ export default {
             background: variables.colorWhite,
             cursor: 'pointer',
         }
-    }
+    },
+    colorResult: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    colorResultValue: {
+        flexGrow: 1,
+    },
+    colorSwitcher: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: [5, 0, 0, 10],
+        cursor: 'pointer',
+        '&:before': {
+            content: '""',
+            width: 0,
+            height: 0,
+            borderLeft: [8, 'solid', variables.transparent],
+            borderRight: [8, 'solid', variables.transparent],
+            borderBottom: [10, 'solid', variables.colorGray],
+            marginBottom: 1,
+        },
+        '&:after': {
+            content: '""',
+            width: 0,
+            height: 0,
+            borderLeft: [8, 'solid', variables.transparent],
+            borderRight: [8, 'solid', variables.transparent],
+            borderTop: [10, 'solid', variables.colorGray],
+            marginTop: 1,
+        }
+    },
+    colorType: {
+        textAlign: 'center',
+    },
+    hslaValue: {
+        padding: '3px',
+        marginTop: '5px',
+        border: [1, 'solid', variables.colorGray],
+        borderRadius: '2px',
+        textAlign: 'center',
+    },
 
 }
