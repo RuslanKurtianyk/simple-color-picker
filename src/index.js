@@ -20,7 +20,6 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		})
 
 		this.type = this.colorTypes.hsla
-
 		this.hslValue = {
 			hue: 0,
 			saturation: 100,
@@ -32,16 +31,14 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		const height = this.getAttribute('height') || 100
 		const paletteStyle = `width: ${width}px; height: ${height}px`
 
-		const {
-			classes
-		} = jssSheets.registry[0]
+		const { classes } = jssSheets.registry[0]
 		const style = jssSheets.toString()
 		const template = document.createElement('template')
 
 		template.innerHTML = `
 			<div class=${classes.colorPickerContainer} style="${paletteStyle}">
 				<div class=${classes.paletteContainer}>
-					<div class="${classes.palette} ${classes.paletteMain}">
+					<div class="${classes.palette} ${classes.paletteMain}" id="pallete-main">
 						<div class="${classes.palette} ${classes.paletteSaturation}" id="saturation-lightness-container">
 							<div class="${classes.palette} ${classes.paletteLightness}"></div>
 							<div class=${classes.paletteChooser} id="saturation-lightness-chooser"></div>
