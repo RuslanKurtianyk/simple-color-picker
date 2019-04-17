@@ -1,4 +1,5 @@
 import jssSheets from './jss'
+import { hslToRgb } from './utils/converter'
 
 window.customElements.define('simple-colorpicker', class extends HTMLElement {
 
@@ -107,6 +108,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		hueRange.addEventListener('input', () => {
 			this.hslValue.hue = hueRange.value
 			this.updateHslaView()
+			this.updateMainPaletteBackground()
 		}, false)
 	}
 
@@ -187,6 +189,12 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	updateHslaView() {
 		const hslaElement = this.shadowRoot.querySelector('#hsla-value')
 		hslaElement.innerHTML = this.generateHslaString()
+	}
+
+	updateMainPaletteBackground() {
+		const mainPalette = this.shadowRoot.querySelector('#pallete-main')
+		const newBackgroundColor = hslToRgb(this.hslValue.hue, this.hslValue.saturation / 100, this.hslValue.lightness / 100)
+		mainPalette.setAttribute('style', `background-color: rgb(${newBackgroundColor})`)
 	}
 
 	updateColorTypeValue() {
