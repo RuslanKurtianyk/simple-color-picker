@@ -53,7 +53,7 @@ export default {
     },
     sliderContainer: {
         position: 'relative',
-        marginTop: '5px',
+        marginTop: '10px',
     },
     sliderChooser: {
         position: 'relative',
@@ -104,6 +104,7 @@ export default {
     colorResult: {
         display: 'flex',
         flexDirection: 'row',
+        marginTop: '10px',
     },
     colorResultValue: {
         flexGrow: 1,
