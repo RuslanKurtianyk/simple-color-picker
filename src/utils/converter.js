@@ -85,3 +85,41 @@ export const rgbToHsl = (r, g, b) => {
         Math.round(l * 1000) / 1000, 
     ]
 }
+
+/**
+ * Converts an RGB color value to HEX.
+ *
+ * @param   {number}  r       The red color value
+ * @param   {number}  g       The green color value
+ * @param   {number}  b       The blue color value
+ * @return  {string}          The HEX color value
+ */
+export const rgbToHex = (r, g, b) => {
+    const rValue = valueToHex(r)
+    const gValue = valueToHex(g)
+    const bValue = valueToHex(b)
+    return `#${rValue}${gValue}${bValue}`
+}
+
+/**
+ * Converts an HEX color value to RGB.
+ *
+ * @param   {string}  hex     The HEX color value
+ * @return  {Array}           The RGB representation (r, g, and b in the set [0, 255])
+ */
+export const hexToRgb = (hex) => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+    const resultHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b)
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(resultHex)
+
+    return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+    ] : null
+}
+
+const valueToHex = (value) => {
+    const hex = value.toString(16)
+    return hex.length == 1 ? '0' + hex : hex
+}
