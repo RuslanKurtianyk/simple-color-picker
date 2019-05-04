@@ -58,7 +58,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 					<div class=${classes.colorResult}>   
 						<div class=${classes.colorResultValue}>
 							<div class=${classes.hslaValue} id="hsla-value">
-								${this.updateCurrentColorValue()}
+								${this.generateCurrentColorValue()}
 							</div>
 							<div class=${classes.colorType} id="color-type-value">${this.type}</div>
 						</div>
@@ -97,7 +97,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		const alphaRange = this.shadowRoot.querySelector('#alpha-handler')
 		alphaRange.addEventListener('input', () => {
 			this.hslValue.alpha = alphaRange.value
-			this.updateHslaView()
+			this.updateColorValueView()
 		}, false)
 	}
 
@@ -105,7 +105,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		const hueRange = this.shadowRoot.querySelector('#hue-handler')
 		hueRange.addEventListener('input', () => {
 			this.hslValue.hue = hueRange.value
-			this.updateHslaView()
+			this.updateColorValueView()
 			this.updateMainPaletteBackground()
 		}, false)
 	}
@@ -163,7 +163,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 				this.hslValue.saturation = parseInt(parseInt((xOffset / dragAreaWidth) * 100))
 				this.hslValue.lightness = parseInt(parseInt((yOffset / dragAreaHeight) * 100))
 				setTranslate(currentX, currentY, dragCircle)
-				this.updateHslaView()
+				this.updateColorValueView()
 			}
 		}
 
@@ -180,13 +180,9 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		container.addEventListener('mousemove', drag, false)
 	}
 
-	// generateHslaString() {
-	// 	return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
-	// }
-
-	updateHslaView() {
+	updateColorValueView() {
 		const hslaElement = this.shadowRoot.querySelector('#hsla-value')
-		hslaElement.innerHTML = this.updateCurrentColorValue()
+		hslaElement.innerHTML = this.generateCurrentColorValue()
 	}
 
 	updateMainPaletteBackground() {
@@ -198,10 +194,10 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	updateColorTypeValue() {
 		const hslaElement = this.shadowRoot.querySelector('#color-type-value')
 		hslaElement.innerHTML = this.type
-		this.updateHslaView()
+		this.updateColorValueView()
 	}
 
-	updateCurrentColorValue() {
+	generateCurrentColorValue() {
 		const colorType = this.type
 		const colorTypes = this.colorTypes
 		const rgbColor = hslToRgb(this.hslValue.hue, this.hslValue.saturation / 100, this.hslValue.lightness / 100)
