@@ -1,15 +1,13 @@
 import jssSheets from './jss'
-import { hslToRgb } from './utils/converter'
+import { hslToRgb, rgbToHsl, rgbToHex, hexToRgb } from './utils/converter'
 
 window.customElements.define('simple-colorpicker', class extends HTMLElement {
 
 	get colorTypes() {
 		return {
-			hsl: 'HSL',
 			hsla: 'HSLA',
-			hex: 'HEX',
-			rgb: 'RGB',
 			rgba: 'RGBA',
+			hex: 'HEX',
 		}
 	}
 
@@ -60,7 +58,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 					<div class=${classes.colorResult}>   
 						<div class=${classes.colorResultValue}>
 							<div class=${classes.hslaValue} id="hsla-value">
-								${this.generateHslaString()}
+								${this.updateCurrentColorValue()}
 							</div>
 							<div class=${classes.colorType} id="color-type-value">${this.type}</div>
 						</div>
@@ -182,13 +180,13 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		container.addEventListener('mousemove', drag, false)
 	}
 
-	generateHslaString() {
-		return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
-	}
+	// generateHslaString() {
+	// 	return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
+	// }
 
 	updateHslaView() {
 		const hslaElement = this.shadowRoot.querySelector('#hsla-value')
-		hslaElement.innerHTML = this.generateHslaString()
+		hslaElement.innerHTML = this.updateCurrentColorValue()
 	}
 
 	updateMainPaletteBackground() {
@@ -200,5 +198,20 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	updateColorTypeValue() {
 		const hslaElement = this.shadowRoot.querySelector('#color-type-value')
 		hslaElement.innerHTML = this.type
+		this.updateHslaView()
+	}
+
+	updateCurrentColorValue() {
+		const colorType = this.type
+		const colorTypes = this.colorTypes
+		const rgbColor = hslToRgb(this.hslValue.hue, this.hslValue.saturation / 100, this.hslValue.lightness / 100)
+		switch(colorType) {
+			case colorTypes.hex: 
+				return rgbToHex(...rgbColor)
+			case colorTypes.rgba:
+				return `rgba(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]}, ${this.hslValue.alpha})`
+			default:
+				return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
+		}
 	}
 })
