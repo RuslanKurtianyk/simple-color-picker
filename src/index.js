@@ -96,6 +96,9 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	initAlphaListener() {
 		const alphaRange = this.shadowRoot.querySelector('#alpha-handler')
 		alphaRange.addEventListener('input', () => {
+			if (this.type === this.colorTypes.hex) {
+				this.type = this.colorTypes.hsla
+			}	
 			this.hslValue.alpha = alphaRange.value
 			this.updateColorValueView()
 		}, false)
