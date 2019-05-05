@@ -135,13 +135,23 @@ export default {
     },
     colorType: {
         textAlign: 'center',
+        marginTop: 10,
     },
-    hslaValue: {
+    colorValue: {
         padding: '3px',
         marginTop: '5px',
+        textAlign: 'center',
+    },
+    colorValueBorder: {
         border: [1, 'solid', variables.colorGray],
         borderRadius: '2px',
-        textAlign: 'center',
+    },
+    complexColorContainer: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    complexColorItemValue: {
+        minWidth: 40
     },
 
 }

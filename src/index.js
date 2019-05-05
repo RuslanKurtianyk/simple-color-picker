@@ -1,5 +1,5 @@
 import jssSheets from './jss'
-import { hslToRgb, rgbToHsl, rgbToHex, hexToRgb } from './utils/converter'
+import { hslToRgb, rgbToHex } from './utils/converter'
 
 window.customElements.define('simple-colorpicker', class extends HTMLElement {
 
@@ -57,10 +57,9 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 					</div>
 					<div class=${classes.colorResult}>   
 						<div class=${classes.colorResultValue}>
-							<div class=${classes.hslaValue} id="hsla-value">
-								${this.generateCurrentColorValue()}
+							<div class="${classes.colorValue}" id="color-value">
+								${this.generateCurrentColorValue(classes)}
 							</div>
-							<div class=${classes.colorType} id="color-type-value">${this.type}</div>
 						</div>
 						<div class=${classes.colorSwitcher} id="color-result-type-change"></div>
 					</div>
@@ -68,6 +67,8 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 			</div>
 			<style>${style}<style>
 		`
+		this.styleClasses = classes
+
 		this.shadowRoot.appendChild(
 			template.content.cloneNode(true)
 		)
@@ -81,7 +82,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	initTypeChangeHandler() {
-		const typeChangeHandler = this.shadowRoot.querySelector("#color-result-type-change")
+		const typeChangeHandler = this.shadowRoot.querySelector('#color-result-type-change')
 		typeChangeHandler.addEventListener('click', () => {
 			const currentType = this.type
 			Object.values(this.colorTypes).forEach((value, index, array) => {
@@ -89,7 +90,7 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 					this.type = index === (array.length - 1) ? array[0] : array[++index]
 				}
 			})
-			this.updateColorTypeValue()
+			this.updateColorValueView()
 		}, false)
 	}
 
@@ -184,8 +185,8 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	updateColorValueView() {
-		const hslaElement = this.shadowRoot.querySelector('#hsla-value')
-		hslaElement.innerHTML = this.generateCurrentColorValue()
+		const hslaElement = this.shadowRoot.querySelector('#color-value')
+		hslaElement.innerHTML = this.generateCurrentColorValue(this.styleClasses)
 	}
 
 	updateMainPaletteBackground() {
@@ -194,23 +195,60 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		mainPalette.setAttribute('style', `background-color: rgb(${newBackgroundColor})`)
 	}
 
-	updateColorTypeValue() {
-		const hslaElement = this.shadowRoot.querySelector('#color-type-value')
-		hslaElement.innerHTML = this.type
-		this.updateColorValueView()
-	}
-
-	generateCurrentColorValue() {
+	generateCurrentColorValue(styleClasses) {
 		const colorType = this.type
 		const colorTypes = this.colorTypes
 		const rgbColor = hslToRgb(this.hslValue.hue, this.hslValue.saturation / 100, this.hslValue.lightness / 100)
 		switch(colorType) {
 			case colorTypes.hex: 
-				return rgbToHex(...rgbColor)
+				return `<div class="${styleClasses.colorValueBorder}">${rgbToHex(...rgbColor)}</div></p>HEX</p>`
 			case colorTypes.rgba:
-				return `rgba(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]}, ${this.hslValue.alpha})`
+				return this.getRgbaTemplate(styleClasses, rgbColor)
 			default:
-				return `hsla(${this.hslValue.hue}, ${this.hslValue.saturation}%, ${this.hslValue.lightness}%, ${this.hslValue.alpha})`
+				return this.getHslaTemplate(styleClasses, this.hslValue)
 		}
 	}
+
+	getRgbaTemplate(classes, rgbColor) {
+		return `<div class="${classes.complexColorContainer}">
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${rgbColor[0]}</div>
+				<p>R</p>
+			</div>
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${rgbColor[1]}</div>
+				<p>G</p>
+			</div>
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${rgbColor[2]}</div>
+				<p>B</p>
+			</div>
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${this.hslValue.alpha}</div>
+				<p>A</p>
+			</div>
+		</div>`
+	}
+
+	getHslaTemplate(classes, hslColor) {
+		return `<div class="${classes.complexColorContainer}">
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${hslColor.hue}</div>
+				<p>H</p>
+			</div>
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${hslColor.saturation}</div>
+				<p>S</p>
+			</div>
+			<div class=" ${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${hslColor.lightness}</div>
+				<p>L</p>
+			</div>
+			<div class="${classes.complexColorItemValue}">
+				<div class="${classes.colorValueBorder}">${hslColor.alpha}</div>
+				<p>A</p>
+			</div>
+		</div>`
+	}
+
 })
