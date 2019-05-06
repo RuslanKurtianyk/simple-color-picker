@@ -112,7 +112,8 @@ export default {
     colorSwitcher: {
         display: 'flex',
         flexDirection: 'column',
-        margin: [5, 0, 0, 10],
+        margin: [8, 0, 0, 10],
+        height: 20,
         cursor: 'pointer',
         '&:before': {
             content: '""',
@@ -151,7 +152,7 @@ export default {
         justifyContent: "space-between",
     },
     complexColorItemValue: {
-        minWidth: 40
+        minWidth: 40,
     },
 
 }
