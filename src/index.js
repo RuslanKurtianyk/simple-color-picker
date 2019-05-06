@@ -120,7 +120,6 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	}
 
 	initSaturationLightnessSelector() {
-		// TODO: rewrite all sliders to one approach
 		const container = this.shadowRoot.querySelector('#saturation-lightness-container')
 		const dragCircle = this.shadowRoot.querySelector('#saturation-lightness-chooser')
 		let active = false
@@ -148,7 +147,6 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 		const dragEnd = () => {
 			initialX = currentX
 			initialY = currentY
-
 			active = false
 		}
 
