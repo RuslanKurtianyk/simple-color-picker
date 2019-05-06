@@ -1,4 +1,4 @@
-import { hslToRgb, rgbToHsl } from "./converter";
+import { hslToRgb, rgbToHex } from "./converter";
 
 describe("Converter", () => {
     describe("HSL to RGB", () => {
@@ -45,48 +45,37 @@ describe("Converter", () => {
         });
     });
 
-    describe("RGB to HSL", () => {
+    describe("RGB to HEX", () => {
         it("SHOULD convert white color", () => {
-            const whiteHslColor = [0, 0, 1];
-            expect(rgbToHsl(255, 255, 255)).toEqual(whiteHslColor);
+            const whiteColor = "#ffffff";
+            expect(rgbToHex(255, 255, 255)).toEqual(whiteColor);
         });
 
         it("SHOULD convert black color", () => {
-            const blackHslColor = [0, 0, 0];
-            expect(rgbToHsl(0, 0, 0)).toEqual(blackHslColor);
+            const blackColor = "#000000";
+            expect(rgbToHex(0, 0, 0)).toEqual(blackColor);
         });
 
         it("SHOULD convert red color", () => {
-            const redHslColor = [0, 1, 0.5];
-            expect(rgbToHsl(255, 0, 0)).toEqual(redHslColor);
+            const redColor = "#ff0000";
+            expect(rgbToHex(255, 0, 0)).toEqual(redColor);
         });
 
         it("SHOULD convert green color", () => {
-            const greenHslColor = [120, 1, 0.5];
-            expect(rgbToHsl(0, 255, 0)).toEqual(greenHslColor);
+            const greenColor = "#00ff00";
+            expect(rgbToHex(0, 255 ,0)).toEqual(greenColor);
         });
 
         it("SHOULD convert blue color", () => {
-            const blueHslColor = [240, 1, 0.5];
-            expect(rgbToHsl(0, 0, 255)).toEqual(blueHslColor);
+            const blueRgbColor = "#0000ff";
+            expect(rgbToHex(0, 0, 255)).toEqual(blueRgbColor);
         });
 
         it("SHOULD convert gray color", () => {
-            const grayRgbColor = [0, 0, 0.502];
-            expect(rgbToHsl(128, 128, 128)).toEqual(grayRgbColor);
-        });
-
-        it("SHOULD handle wrong red value", () => {
-            expect(() => rgbToHsl("test", 0, 0)).toThrow(new Error("Something went wrong. Please check input data."));
-        });
-
-        it("SHOULD handle wrong green value", () => {
-            expect(() => rgbToHsl(100, "test", 0)).toThrow(new Error("Something went wrong. Please check input data."));
-        });
-
-        it("SHOULD handle wrong blue", () => {
-            expect(() => rgbToHsl(349, 0, "test")).toThrow(new Error("Something went wrong. Please check input data."));
+            const grayColor = "#808080";
+            expect(rgbToHex(128, 128, 128)).toEqual(grayColor);
         });
     });
+   
 });
 
