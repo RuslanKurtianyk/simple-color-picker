@@ -84,12 +84,17 @@ window.customElements.define('simple-colorpicker', class extends HTMLElement {
 	initTypeChangeHandler() {
 		const typeChangeHandler = this.shadowRoot.querySelector('#color-result-type-change')
 		typeChangeHandler.addEventListener('click', () => {
-			const currentType = this.type
-			Object.values(this.colorTypes).forEach((value, index, array) => {
-				if (currentType === value) {
-					this.type = index === (array.length - 1) ? array[0] : array[++index]
-				}
-			})
+			switch (this.type) {
+				case this.colorTypes.hsla:
+				 	this.type = this.colorTypes.rgba
+					break
+				case this.colorTypes.rgba:
+					this.type = this.hslValue.alpha < 1 ? this.colorTypes.hsla : this.colorTypes.hex
+					break	
+				case this.colorTypes.hex:
+					this.type = this.colorTypes.hsla
+					break
+			}
 			this.updateColorValueView()
 		}, false)
 	}
