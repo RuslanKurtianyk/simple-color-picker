@@ -38,55 +38,6 @@ export const hslToRgb = (h, s, l) => {
 }
 
 /**
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- *
- * @param   {number}  r       The red color value
- * @param   {number}  g       The green color value
- * @param   {number}  b       The blue color value
- * @return  {Array}           The HSL representation
- */
-export const rgbToHsl = (r, g, b) => {
-    if (isNaN(r) || isNaN(g) || isNaN(b)) {
-        throw new Error("Something went wrong. Please check input data.")
-    }
-    r = r / 255
-    g = g / 255
-    b = b / 255
-
-    const max = Math.max(r, g, b)
-    const min = Math.min(r, g, b)
-    let h, s, l = (max + min) / 2
-
-    if (max === min) {
-        h = s = 0
-    } else {
-        const diff = max - min
-        s = l > 0.5 ? diff / (2 - max - min) : diff / (max + min)
-
-        switch (max) {
-            case r:
-                h = (g - b) / diff + (g < b ? 6 : 0)
-                break
-            case g:
-                h = (b - r) / diff + 2
-                break
-            case b:
-                h = (r - g) / diff + 4
-                break
-        }
-
-        h = h * 60 
-    }
-
-    return [
-        Math.round(h * 1000) / 1000, 
-        Math.round(s * 1000) / 1000, 
-        Math.round(l * 1000) / 1000, 
-    ]
-}
-
-/**
  * Converts an RGB color value to HEX.
  *
  * @param   {number}  r       The red color value
@@ -99,24 +50,6 @@ export const rgbToHex = (r, g, b) => {
     const gValue = valueToHex(g)
     const bValue = valueToHex(b)
     return `#${rValue}${gValue}${bValue}`
-}
-
-/**
- * Converts an HEX color value to RGB.
- *
- * @param   {string}  hex     The HEX color value
- * @return  {Array}           The RGB representation (r, g, and b in the set [0, 255])
- */
-export const hexToRgb = (hex) => {
-    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
-    const resultHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b)
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(resultHex)
-
-    return result ? [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16)
-    ] : null
 }
 
 const valueToHex = (value) => {
