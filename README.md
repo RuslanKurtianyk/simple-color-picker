@@ -31,6 +31,15 @@ Run unit tests
 npm run test
 ```
 
+### Developing
+Run development-server
+
+```
+npm start
+```
+and open *http://localhost:7700/*
+
+
 ## Built With
 
 * [Webpack](https://github.com/webpack/webpack) - A bundler for javascript apps
