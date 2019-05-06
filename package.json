@@ -1,6 +1,6 @@
 {
   "name": "simple-color-picker",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "Just color picker custom web component",
   "main": "index.js",
   "scripts": {
