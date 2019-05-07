@@ -44,14 +44,13 @@ and open *http://localhost:7700/*
 
 * [Webpack](https://github.com/webpack/webpack) - A bundler for javascript apps
 * [Babel](https://github.com/babel/babel) - Compiler for writing next generation JavaScript
-* [JSS](https://cssinjs.org) - Tool for CSS to descrive styles in JavaScript 
+* [JSS](https://cssinjs.org) - Tool for CSS to describe styles in JavaScript 
 
 
 ## Authors
 
 * **Ruslan Kurtianyk** - [kurtianyk](https://github.com/RuslanKurtianyk)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
